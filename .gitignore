@@ -1,4 +1,4 @@
-
-.env.php
+.idea
+src/.env.php
 vendor/
 node_modules/
