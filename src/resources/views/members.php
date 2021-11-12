@@ -7,37 +7,46 @@
                 <div class="shadow overflow-hidden border-b border-gray-200 dark:border-dark-5 sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-light-3 dark:bg-dark-3">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">
-                                    Nom
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">
-                                    Equipes
-                                </th>
-                                <th scope="col" class="relative px-6 py-3">
-                                    <span class="sr-only">Action</span>
-                                </th>
-                            </tr>
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">
+                                Nom
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">
+                                Equipes
+                            </th>
+                            <th scope="col" class="relative px-6 py-3">
+                                <span class="sr-only">Action</span>
+                            </th>
+                        </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white dark:bg-dark-4 dark:divide-dark-3 animate-fade-in-down">
-                            <?php foreach ($members as $member) : ?>
-                                <tr>
-                                    <td class="px-6 py-2 whitespace-nowrap">
-                                        <?= $member->name ?>
-                                    </td>
-                                    <td class="px-6 py-2 whitespace-nowrap">
-                                        <?= implode(', ', array_map(
-                                            fn ($team) => "<a href=equipe-" . $team->id . ">" . $team->name . "</a>",
-                                            $member->teams()
-                                        )) ?>
-                                    </td>
-                                    <td class="px-6 text-right">
-                                        <?php if ($Auth::user()->isModerator() && !$member->isModerator()) : ?>
-                                            <button data-member=<?= json_encode(['id' => $member->id, 'name' => $member->name]) ?> type="button" class="btn-define-moderator px-4 py-2 rounded text-sm dark:bg-dark-3 dark:hover:bg-dark-2">Nommer modérateur</button>
+                        <?php foreach ($members as $member) : ?>
+                            <tr>
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <?php if ($user->isModerator()): ?>
+                                    <a href=profile-<?= $member->id ?>>
                                         <?php endif ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach ?>
+                                        <?= $member->name ?>
+                                        <?php if ($user->isModerator()): ?>
+                                    </a>
+                                <?php endif ?>
+                                </td>
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <?= implode(', ', array_map(
+                                        fn($team) => "<a href=equipe-" . $team->id . ">" . $team->name . "</a>",
+                                        $member->teams()
+                                    )) ?>
+                                </td>
+                                <td class="px-6 text-right">
+                                    <?php if ($Auth::user()->isModerator() && !$member->isModerator()) : ?>
+                                        <button data-member=<?= json_encode(['id' => $member->id, 'name' => $member->name]) ?> type="button"
+                                                class="btn-define-moderator px-4 py-2 rounded text-sm dark:bg-dark-3 dark:hover:bg-dark-2">
+                                            Nommer modérateur
+                                        </button>
+                                    <?php endif ?>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
                         </tbody>
                     </table>
                 </div>

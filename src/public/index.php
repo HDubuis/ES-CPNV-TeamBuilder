@@ -21,6 +21,9 @@ $router->get('/mes-equipes', 'App\Controllers\MyTeamsController@index')->name('m
 $router->get('/equipe-:id', 'App\Controllers\TeamController@index')->name('team');
 $router->post('/equipe', 'App\Controllers\TeamController@create');
 $router->get('/moderateurs', 'App\Controllers\ModeratorsController@index')->name('moderators');
+$router->get('/edit-profile-:id','App\Controllers\MembersController@editProfile');
+$router->post('/edit-profile-:id','App\Controllers\MembersController@changeName');
+$router->get('/profile-:id','App\Controllers\MembersController@profile')->name('profile');
 
 $router->post('/logout', 'App\Providers\Auth@logout');
 

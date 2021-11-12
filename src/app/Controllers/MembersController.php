@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Providers\Auth;
 use App\Models\Members;
 use App\Models\Roles;
+use App\Providers\Auth;
 use Router\Router;
 
 class MembersController extends Controller
@@ -16,7 +16,8 @@ class MembersController extends Controller
 
         return $this->render('members', [
             'Auth' => Auth::class,
-            'members' => $members
+            'members' => $members,
+            'user' => Auth::user()
         ]);
     }
 
@@ -30,5 +31,48 @@ class MembersController extends Controller
         }
 
         Router::redirect('members');
+    }
+
+    public function profile($id)
+    {
+        $user = Members::find($id);
+        $captainTeam = [];
+        foreach ($user->teams() as $team) {
+            if ($team->captain()->id == $user->id) {
+                $captainTeam[] = $team;
+            }
+        }
+        return $this->render('profile',
+            ['member' => $user,
+                'captainTeam' => $captainTeam]);
+    }
+
+    public function editProfile($id)
+    {
+        $user = Members::find($id);
+        $captainTeam = [];
+        foreach ($user->teams() as $team) {
+            if ($team->captain()->id == $user->id) {
+                $captainTeam[] = $team;
+            }
+        }
+
+        return $this->render('editprofile',
+            ['member' => $user,
+                'user' => Auth::user(),
+                'captainTeam' => $captainTeam]);
+    }
+
+    public function changeName($id)
+    {
+        $user = Members::find($id);
+        $user->name = htmlspecialchars($_POST['name']);
+        try{
+            $user->save();
+        }catch (\PDOException $e){
+            //TODO gérer doublons
+        };
+
+        Router::redirect('myprofile');
     }
 }
