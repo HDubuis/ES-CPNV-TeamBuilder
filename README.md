@@ -12,7 +12,6 @@ npm install
 npm run build
 ```
 
-
 ## Autologin
 
 The autologed member id is defined in the .env config file.
@@ -26,6 +25,13 @@ const USER_ID = 1;
 ```bash
 php -S localhost:9000 -t src/public
 ```
+
+## Add Status to member
+
+The database creation script has been updated to add status.
+You have to use the file "teambuilder.sql" which is in the db folder.
+It is an additional table, called status, which contains the different possible statuses for a member, and an
+additional field in the members table, which links them.
 
 ## Unit tests
 
