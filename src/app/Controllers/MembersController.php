@@ -46,7 +46,7 @@ class MembersController extends Controller
             ['member' => $user,
                 'captainTeam' => $captainTeam]);
     }
-
+    //TODO factoriser ces deux fonctions
     public function editProfile($id)
     {
         $user = Members::find($id);
@@ -75,4 +75,6 @@ class MembersController extends Controller
 
         Router::redirect('myprofile');
     }
+
+    //TODO changement de status et de rôle par un modérateur
 }

@@ -24,6 +24,7 @@ $router->get('/moderateurs', 'App\Controllers\ModeratorsController@index')->name
 $router->get('/edit-profile-:id','App\Controllers\MembersController@editProfile');
 $router->post('/edit-profile-:id','App\Controllers\MembersController@changeName');
 $router->get('/profile-:id','App\Controllers\MembersController@profile')->name('profile');
+//TODO Route pour la modification de profil par un modérateur
 
 $router->post('/logout', 'App\Providers\Auth@logout');
 
